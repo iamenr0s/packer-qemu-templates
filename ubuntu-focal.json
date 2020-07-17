@@ -1,0 +1,81 @@
+{
+  "_comment": "Build with `packer build ubuntu-focal.json`",
+  "builders": [
+    {
+      "accelerator": "{{ user `accelerator` }}",
+      "type": "qemu",
+      "boot_command": [
+        "{{ user `boot_command_prefix` }}",
+        "/install/vmlinuz noapic ",
+        "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu/{{ user `preseed_file_name` }} ",
+        "debian-installer={{ user `locale` }} auto locale={{ user `locale` }} kbd-chooser/method=en ",
+        "hostname={{ user `name` }} ",
+        "fb=false debconf/frontend=noninteractive ",
+        "keyboard-configuration/modelcode=SKIP ",
+        "keyboard-configuration/layout=GB ",
+        "keyboard-configuration/variant=GB console-setup/ask_detect=false ",
+        "initrd=/install/initrd.gz -- <enter>"
+      ],
+      "boot_wait": "5s",
+      "cpus": "{{ user `cpus` }}",
+      "disk_size": "{{ user `disk_size` }}",
+      "headless": "{{ user `headless` }}",
+      "http_directory": "http",
+      "iso_checksum": "{{ user `ubuntu_iso_checksum` }}",
+      "iso_urls": [
+        "{{ user `ubuntu_images_url` }}"
+      ],
+      "memory": "{{ user `memory` }}",
+      "output_directory": "{{ user `name` }}-qemu",
+      "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_timeout": "60m",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "vm_name": "{{ user `name` }}"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "compression_level": 9,
+        "output": "{{ user `packer_images_output_dir` }}/{{ user `name` }}-{{ .Provider }}.box",
+        "type": "vagrant"
+      },
+      {
+        "type": "vagrant-cloud",
+        "box_tag": "enr0s/ubuntu-focal",
+        "access_token": "{{user `cloud_token`}}",
+        "version": "{{user `version`}}"
+      }
+    ]
+  ],
+  "provisioners": [
+    {
+      "execute_command": "echo 'vagrant' | sudo -S -E bash '{{ .Path }}'",
+      "scripts": [
+        "scripts/common/vagrant.sh",
+        "scripts/ubuntu/update.sh"
+      ],
+      "type": "shell"
+    }
+  ],
+  "variables": {
+    "boot_command_prefix": "<enter><wait><f6><esc><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+    "accelerator": "kvm",
+    "cpus": "1",
+    "disk_size": "20480",
+    "headless": "false",
+    "memory": "512",
+    "name": "ubuntu-focal",
+    "packer_images_output_dir": "boxes/",
+    "preseed_file_name": "preseed.cfg",
+    "locale": "en_GB",
+    "ssh_fullname": "vagrant",
+    "ssh_password": "vagrant",
+    "ssh_username": "vagrant",
+    "ubuntu_images_url": "http://cdimage.ubuntu.com/ubuntu-legacy-server/releases/20.04/release/ubuntu-20.04-legacy-server-amd64.iso",
+    "ubuntu_iso_checksum": "sha256:36f15879bd9dfd061cd588620a164a82972663fdd148cce1f70d57d314c21b73",
+    "cloud_token": "{{ env `VAGRANT_CLOUD_TOKEN` }}",
+    "version": "1.0.{{timestamp}}"
+  }
+}
