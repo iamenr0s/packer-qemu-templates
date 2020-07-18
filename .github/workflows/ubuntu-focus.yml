@@ -19,7 +19,7 @@ jobs:
         with:
           command: validate
           arguments: -syntax-only
-          target: ubuntu-focus.json
+          target: /github/workspace/ubuntu-focus.json
 
       # build artifact
       - name: Build Artifact
@@ -29,4 +29,4 @@ jobs:
         with:
           command: build
           arguments: "-color=false -on-error=abort"
-          target: ubuntu-focus.json
+          target: /github/workspace/ubuntu-focus.json
