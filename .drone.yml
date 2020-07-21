@@ -14,11 +14,12 @@ steps:
     actions: build
     color: true
     context: ubuntu
-    debug: false
+    debug: true
     template: ubuntu-focal.json
   when:
     event:
-    - pull_request
+    - tag
+    - push
     ref:
     - refs/heads/master
     - "refs/tags/*"
