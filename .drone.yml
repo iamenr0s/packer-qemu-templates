@@ -8,10 +8,10 @@ platform:
 
 steps:
 - name: ubuntu
-  pull: always
+  pull: if-not-exists
   image: enros/packer-build-qemu:latest
   commands:
-    - build ubuntu-focal.json
+    - packer build ubuntu-focal.json
   when:
     event:
     - tag
