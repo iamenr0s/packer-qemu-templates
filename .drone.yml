@@ -14,7 +14,7 @@ steps:
     actions: build
     color: true
     context: ubuntu
-    debug: true
+    debug: false
     template: ubuntu-focal.json
   when:
     event:
