@@ -11,7 +11,7 @@ steps:
   pull: always
   image: enros/packer-build-qemu:latest
   commands:
-    build ubuntu-focal.json
+    - build ubuntu-focal.json
   when:
     event:
     - tag
