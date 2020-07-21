@@ -7,11 +7,22 @@ platform:
   arch: amd64
 
 steps:
-- name: ubuntu
-  pull: if-not-exists
-  image: enros/packer-build-qemu:latest
-  commands:
-    - packer build ubuntu-focal.json
+  #- name: ubuntu
+  #  pull: if-not-exists
+  #  image: enros/packer-build-qemu:latest
+  #  commands:
+  #    - packer build ubuntu-focal.json
+  #  when:
+  #    event:
+  #    - tag
+  #    - push
+  #    ref:
+  #    - refs/heads/master
+  #    - "refs/tags/*"
+- packer:
+    image: appleboy/drone-packer
+    template: ubuntu-focal.json
+    actions: build
   when:
     event:
     - tag
@@ -19,3 +30,4 @@ steps:
     ref:
     - refs/heads/master
     - "refs/tags/*"
+
