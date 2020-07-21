@@ -23,6 +23,9 @@ steps:
     image: appleboy/drone-packer
     template: ubuntu-focal.json
     actions: build
+    environment: 
+      VAGRANT_CLOUD_TOKEN:
+        from_secret: VAGRANT_CLOUD_TOKEN
   when:
     event:
     - tag
