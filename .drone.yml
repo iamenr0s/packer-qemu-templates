@@ -19,13 +19,13 @@ steps:
   #    ref:
   #    - refs/heads/master
   #    - "refs/tags/*"
-- packer:
-    image: appleboy/drone-packer
-    template: ubuntu-focal.json
-    actions: build
-    environment: 
-      VAGRANT_CLOUD_TOKEN:
-        from_secret: VAGRANT_CLOUD_TOKEN
+- name: ubuntu
+  image: appleboy/drone-packer
+  template: ubuntu-focal.json
+  actions: build
+  environment: 
+    VAGRANT_CLOUD_TOKEN:
+      from_secret: VAGRANT_CLOUD_TOKEN
   when:
     event:
     - tag
