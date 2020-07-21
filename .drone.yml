@@ -10,12 +10,8 @@ steps:
 - name: ubuntu
   pull: always
   image: enros/packer-build-qemu:latest
-  settings:
-    actions: build
-    color: true
-    context: ubuntu
-    debug: true
-    template: ubuntu-focal.json
+  commands:
+    build ubuntu-focal.json
   when:
     event:
     - tag
