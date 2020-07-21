@@ -1,29 +1,10 @@
----
-kind: pipeline
-name: default
 
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-  #- name: ubuntu
-  #  pull: if-not-exists
-  #  image: enros/packer-build-qemu:latest
-  #  commands:
-  #    - packer build ubuntu-focal.json
-  #  when:
-  #    event:
-  #    - tag
-  #    - push
-  #    ref:
-  #    - refs/heads/master
-  #    - "refs/tags/*"
-- name: ubuntu
-  image: appleboy/drone-packer
-  template: ubuntu-focal.json
-  actions: build
-  environment: 
+pipeline:
+  packer:
+    image: appleboy/drone-packer
+    template: ubuntu-focal.json
+    actions: build
+  environment:
     VAGRANT_CLOUD_TOKEN:
       from_secret: VAGRANT_CLOUD_TOKEN
   when:
@@ -33,4 +14,5 @@ steps:
     ref:
     - refs/heads/master
     - "refs/tags/*"
+
 
