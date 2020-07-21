@@ -1,0 +1,24 @@
+---
+kind: pipeline
+name: default
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: ubuntu
+  pull: always
+  image: enros/packer-build-qemu:latest
+  settings:
+    actions: build
+    color: true
+    context: ubuntu
+    debug: true
+    template: ubuntu-focal.json
+  when:
+    event:
+    - pull_request
+    ref:
+    - refs/heads/master
+    - "refs/tags/*"
