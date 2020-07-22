@@ -4,6 +4,9 @@
     {
       "accelerator": "{{ user `accelerator` }}",
       "type": "qemu",
+      "qemuargs": [
+        ["-display", "none"]
+      ],
       "boot_command": [
         "{{ user `boot_command_prefix` }}",
         "/install/vmlinuz noapic ",
