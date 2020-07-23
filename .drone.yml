@@ -11,7 +11,7 @@ steps:
     pull: if-not-exists
     image: enros/packer-build-qemu:latest
     volumes:
-    - /dev/kvm:/dev/kvm
+      - /dev/kvm:/dev/kvm
     commands:
       - PACKER_LOG=1 packer build ubuntu-focal.json
     environment:
