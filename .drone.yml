@@ -11,8 +11,7 @@ steps:
     pull: if-not-exists
     image: enros/packer-build-qemu:latest
     volumes:
-    - name: kvm
-      path: /dev/kvm
+    - /dev/kvm:/dev/kvm
     commands:
       - PACKER_LOG=1 packer build ubuntu-focal.json
     environment:
@@ -25,7 +24,3 @@ steps:
       ref:
       - refs/heads/master
       - "refs/tags/*"
-volumes:
-  - name: kvm
-    host:
-      path: /dev/kvm
