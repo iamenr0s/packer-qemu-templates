@@ -3,7 +3,7 @@ sysctl net.ipv6.conf.all.disable_ipv6=1
 echo "net.ipv6.conf.all.disable_ipv6 = 1" | tee -a /etc/sysctl.d/local.conf
 
 # Revert the OS naming of interface names to older ethX formats.
-sed 's/\(^GRUB_CMDLINE_LINUX="\)/\1net.ifnames=0 biosdevname=0/' /etc/default/grub
+sed -ie 's/\(^GRUB_CMDLINE_LINUX="\)/\1net.ifnames=0 biosdevname=0/' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # Configure network interface
