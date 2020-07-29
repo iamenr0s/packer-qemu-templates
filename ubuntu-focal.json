@@ -57,7 +57,7 @@
       "execute_command": "echo 'vagrant' | sudo -S -E bash '{{ .Path }}'",
       "scripts": [
         "scripts/common/vagrant.sh",
-        "scripts/ubuntu/update.sh"
+        "scripts/ubuntu/update.sh",
         "scripts/ubuntu/network.sh"
       ],
       "type": "shell"
