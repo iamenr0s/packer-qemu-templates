@@ -58,7 +58,8 @@
       "scripts": [
         "scripts/common/vagrant.sh",
         "scripts/ubuntu/update.sh",
-        "scripts/ubuntu/network.sh"
+        "scripts/ubuntu/network.sh",
+	"scripts/ubuntu/qemu.sh"
       ],
       "type": "shell"
     }
