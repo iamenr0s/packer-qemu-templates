@@ -31,7 +31,7 @@ sed -i -e "s/#Cache=.*/Cache=yes/g" /etc/systemd/resolved.conf
 sed -i -e "s/#DNSStubListener=.*/DNSStubListener=yes/g" /etc/systemd/resolved.conf
 
 # Install ifplugd so we can monitor and auto-configure nics.
-retry apt-get --assume-yes install ifplugd
+apt-get --assume-yes install ifplugd
 
 # Configure ifplugd to monitor the eth0 interface.
 sed -i -e 's/INTERFACES=.*/INTERFACES="eth0"/g' /etc/default/ifplugd
