@@ -1,11 +1,9 @@
 ---
 kind: pipeline
 name: default
-
 platform:
   os: linux
   arch: amd64
-
 steps:
 - name: ubuntu
   pull: if-not-exists
@@ -32,7 +30,6 @@ steps:
     webhook:
       from_secret: SLACK_WEBHOOK
     channel: pipeline
-
 volumes:
 - name: kvm
   host:

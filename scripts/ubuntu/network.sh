@@ -1,10 +1,11 @@
+#!/bin/bash -eux
+
 # Disable IPv6
 sysctl net.ipv6.conf.all.disable_ipv6=1
 echo "net.ipv6.conf.all.disable_ipv6 = 1" | tee -a /etc/sysctl.d/local.conf
 
-# Revert the OS naming of interface names to older ethX formats.
-sed -ie 's/\(^GRUB_CMDLINE_LINUX="\)/\1net.ifnames=0 biosdevname=0/' /etc/default/grub
-grub-mkconfig -o /boot/grub/grub.cfg
+printf "ubuntu-focal.localdomain\n" > /etc/hostname
+printf "\n127.0.0.1 ubuntu-focal.localdomain\n\n" >> /etc/hosts
 
 # Configure network interface
 cat <<EOF | tee /etc/netplan/01-netcfg.yaml
