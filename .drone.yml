@@ -14,6 +14,7 @@ steps:
       path: /dev/kvm
   commands:
     - PACKER_LOG=1 packer build ubuntu-focal.json
+    - PACKER_LOG=1 packer build ubuntu-bionic.json
   environment:
     VAGRANT_CLOUD_TOKEN:
       from_secret: VAGRANT_CLOUD_TOKEN
