@@ -101,7 +101,7 @@
     "ssh_fullname": "vagrant",
     "ssh_password": "vagrant",
     "ssh_username": "vagrant",
-    "ubuntu_images_url": "http://cdimage.ubuntu.com/ubuntu/releases/18.04.5/release/ubuntu-18.04.5-server-arm64.iso",
+    "ubuntu_images_url": "http://cdimage.ubuntu.com/ubuntu/releases/18.04.5/release/ubuntu-18.04.5-server-amd64.iso",
     "ubuntu_iso_checksum": "sha256:8c5fc24894394035402f66f3824beb7234b757dd2b5531379cb310cedfdf0996",
     "cloud_token": "{{ env `VAGRANT_CLOUD_TOKEN` }}",
     "version": "1.0.{{timestamp}}"
