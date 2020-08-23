@@ -1,0 +1,109 @@
+{
+  "_comment": "Build with `packer build ubuntu-bionic.json`",
+  "builders": [
+    {
+      "name": "{{ user `name` }}",
+      "vm_name": "{{ user `name` }}",
+      "accelerator": "{{ user `accelerator` }}",
+      "type": "qemu",
+      "qemuargs": [
+        ["-display", "none"]
+      ],
+      "boot_wait": "5s",
+      "boot_command": [
+        "{{ user `boot_command_prefix` }}",
+        "/install/vmlinuz noapic ",
+        "initrd=/install/initrd.gz ",
+        "debian-installer={{ user `locale` }} auto locale={{ user `locale` }} kbd-chooser/method=en ",
+        "hostname={{ user `name` }} ",
+        "fb=false ",
+        "debconf/frontend=noninteractive ",
+        "keyboard-configuration/modelcode=SKIP ",
+        "keyboard-configuration/layout=GB ",
+        "keyboard-configuration/variant=GB ",
+        "console-setup/ask_detect=false ",
+        "ipv6.disable_ipv6=1 net.ifnames=0 biosdevname=0 ",
+        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu/{{ user `preseed_file_name` }} ",
+        "--- <enter>"
+      ],
+      "cpus": "{{ user `cpus` }}",
+      "disk_size": "{{ user `disk_size` }}",
+      "disk_discard": "unmap",
+      "disk_cache": "unsafe",
+      "disk_compression": true,
+      "disk_interface": "virtio-scsi",
+      "net_device": "virtio-net",
+      "headless": "{{ user `headless` }}",
+      "http_directory": "http",
+      "iso_checksum": "{{ user `ubuntu_iso_checksum` }}",
+      "iso_urls": [
+        "{{ user `ubuntu_images_url` }}"
+      ],
+      "memory": "{{ user `memory` }}",
+      "output_directory": "{{ user `name` }}-qemu",
+      "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_timeout": "60m",
+      "ssh_username": "{{ user `ssh_username` }}"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "compression_level": 9,
+        "output": "{{ user `packer_images_output_dir` }}/{{ user `name` }}-{{ .Provider }}.box",
+        "type": "vagrant"
+      },
+      {
+        "type": "vagrant-cloud",
+        "box_tag": "enr0s/ubuntu-bionic",
+        "access_token": "{{user `cloud_token`}}",
+        "version": "{{user `version`}}"
+      }
+    ]
+  ],
+  "provisioners": [
+    {
+      "execute_command": "echo 'vagrant' | sudo -S -E bash '{{ .Path }}'",
+      "scripts": [
+        "scripts/common/vagrant.sh",
+        "scripts/ubuntu/update.sh",
+        "scripts/ubuntu/qemu.sh",
+        "scripts/ubuntu/cleanup.sh"
+      ],
+      "type": "shell",
+      "pause_before": "120s",
+      "start_retry_timeout": "15m",
+      "expect_disconnect": "true"
+    },
+    {
+      "execute_command": "echo 'vagrant' | sudo -S -E bash '{{ .Path }}'",
+      "scripts": [
+        "scripts/common/machine.sh",
+        "scripts/common/leases.sh"
+      ],
+      "type": "shell",
+      "start_retry_timeout": "15m",
+      "expect_disconnect": "true"
+    }
+  ],
+  "variables": {
+    "boot_command_prefix": "<enter><wait><f6><esc><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+    "accelerator": "kvm",
+    "cpus": "1",
+    "disk_size": "20480",
+    "headless": "false",
+    "memory": "512",
+    "name": "ubuntu-bionic",
+    "packer_images_output_dir": "boxes/",
+    "preseed_file_name": "preseed.cfg",
+    "locale": "en_GB",
+    "ssh_fullname": "vagrant",
+    "ssh_password": "vagrant",
+    "ssh_username": "vagrant",
+    "ubuntu_images_url": "http://cdimage.ubuntu.com/ubuntu/releases/18.04.5/release/ubuntu-18.04.5-server-arm64.iso",
+    "ubuntu_iso_checksum": "sha256:8c5fc24894394035402f66f3824beb7234b757dd2b5531379cb310cedfdf0996",
+    "cloud_token": "{{ env `VAGRANT_CLOUD_TOKEN` }}",
+    "version": "1.0.{{timestamp}}"
+  }
+}
