@@ -9,10 +9,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - 
-      name: Packer qemu build
-      uses: enr0s/packer-qemu-action@v1.0
-      with:
-        templateFile: ubuntu-focal.json
+      - 
+        uses: actions/checkout@v1
+      - 
+        name: Packer qemu build
+        uses: enr0s/packer-qemu-action@v1.0
+        with:
+          templateFile: ubuntu-focal.json
