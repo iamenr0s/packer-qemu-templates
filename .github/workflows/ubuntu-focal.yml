@@ -17,3 +17,5 @@ jobs:
         uses: enr0s/packer-qemu-action@v1.1
         with:
           templateFile: ubuntu-focal.json
+        env:
+          VAGRANT_CLOUD_TOKEN: ${{ secrets.VAGRANT_CLOUD_TOKEN }}
