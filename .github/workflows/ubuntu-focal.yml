@@ -8,12 +8,12 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - 
         uses: actions/checkout@v1
       -
-        run: sudo apt-get install openssl libvirt-daemon qemu qemu-system-x86_64 qemu-img
+        run: sudo apt-get install openssl libvirt-daemon qemu qemu-system-x86
       - 
         name: Packer qemu build
         uses: enr0s/packer-qemu-action@v1.1
