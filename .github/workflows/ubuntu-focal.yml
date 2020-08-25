@@ -12,6 +12,8 @@ jobs:
     steps:
       - 
         uses: actions/checkout@v1
+      -
+        run: sudo apt-get install openssl libvirt-daemon qemu qemu-system-x86_64 qemu-img
       - 
         name: Packer qemu build
         uses: enr0s/packer-qemu-action@v1.1
