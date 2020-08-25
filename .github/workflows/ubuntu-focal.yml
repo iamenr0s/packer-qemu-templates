@@ -11,14 +11,14 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - 
-        uses: actions/checkout@v1
-      - 
         run: sudo apt-get update
       -
-        run: sudo apt-get install openssl libvirt-daemon qemu qemu-system-x86
+        run: sudo apt-get install openssl qemu-system-x86 qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virtinst virt-manager
+      - 
+        uses: actions/checkout@v1
       - 
         name: Packer qemu build
-        uses: enr0s/packer-qemu-action@v1.1
+        uses: enr0s/packer-qemu-action@v1.2
         with:
           templateFile: ubuntu-focal.json
         env:
