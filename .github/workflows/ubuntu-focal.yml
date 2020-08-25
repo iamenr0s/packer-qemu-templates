@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v1
       - 
         name: Packer qemu build
-        uses: enr0s/packer-qemu-action@v1.4
+        uses: enr0s/packer-qemu-action@v0.1
         with:
           templateFile: ubuntu-focal.json
         env:
