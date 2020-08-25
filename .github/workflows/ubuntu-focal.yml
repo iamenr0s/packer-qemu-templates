@@ -12,6 +12,8 @@ jobs:
     steps:
       - 
         uses: actions/checkout@v1
+      - 
+        run: apt-get update
       -
         run: sudo apt-get install openssl libvirt-daemon qemu qemu-system-x86
       - 
