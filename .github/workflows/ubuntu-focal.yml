@@ -7,6 +7,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-20.04
+    env:
+      DOCKER_CLI_EXPERIMENTAL: enabled
     steps:
       - 
         run: sudo apt-get update
@@ -21,4 +23,3 @@ jobs:
           templateFile: ubuntu-focal.json
         env:
           VAGRANT_CLOUD_TOKEN: ${{ secrets.VAGRANT_CLOUD_TOKEN }}
-          DOCKER_CLI_EXPERIMENTAL: enabled
