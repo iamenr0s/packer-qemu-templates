@@ -13,7 +13,7 @@ jobs:
       - 
         run: sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install openssl qemu-system-x86 qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virtinst virt-manager kmod
       - 
-        run: modprobe kvm
+        run: sudo modprobe kvm
       - 
         uses: actions/checkout@v1
       - 
