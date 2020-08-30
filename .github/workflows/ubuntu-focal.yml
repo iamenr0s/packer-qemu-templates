@@ -34,7 +34,7 @@ jobs:
           -v "/home/runner/work/_temp/_github_home":"/github/home" \
           -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" \
           -v "/home/runner/work/packer-qemu-templates/packer-qemu-templates":"/github/workspace" \
-          --rm -i enros/packer-build-qemu:latest PACKER_LOG=1 packer build ubuntu-focal.json
+          --rm -i enros/packer-build-qemu:latest packer build ubuntu-focal.json
         env:
           VAGRANT_CLOUD_TOKEN: ${{ secrets.VAGRANT_CLOUD_TOKEN }}
           PACKER_LOG: 1
