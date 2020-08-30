@@ -9,7 +9,11 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - 
-        run: sudo apt-get update && sudo apt-get install openssl qemu-system-x86 qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virtinst virt-manager
+        run: sudo apt-get update 
+      - 
+        run: sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install openssl qemu-system-x86 qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virtinst virt-manager kmod
+      - 
+        run: modprobe kvm
       - 
         uses: actions/checkout@v1
       - 
