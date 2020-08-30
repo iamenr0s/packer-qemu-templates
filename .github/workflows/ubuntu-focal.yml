@@ -17,7 +17,7 @@ jobs:
         run: docker pull enros/packer-build-qemu:latest
       - 
         name: Packer qemu build
-        uses: enr0s/packer-qemu-action@v0.2
+        uses: enr0s/packer-qemu-action@v0.1
         with:
           templateFile: ubuntu-focal.json
         env:
