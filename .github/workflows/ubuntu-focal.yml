@@ -11,30 +11,12 @@ jobs:
       - 
         run: sudo apt-get update 
       - 
-        run: sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install openssl qemu-system-x86 qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virtinst virt-manager kmod
+        run: sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install qemu qemu-kvm libvirt-daemon bridge-utils virt-manager virtinst cpu-checker kmod
       - 
-        run: sudo modprobe kvm
+        run: sudo kvm-ok
       - 
         uses: actions/checkout@v1
       - 
         name: Pull the Docker Image
         run: docker pull enros/packer-build-qemu:latest
-      - 
-        name: Packer build ubuntu-focal
-        run: |
-          /usr/bin/docker run --privileged \
-          --workdir /github/workspace -e VAGRANT_CLOUD_TOKEN -e PACKER_LOG -e INPUT_TEMPLATEFILE \
-          -e INPUT_WORKINGDIR -e HOME -e GITHUB_JOB -e GITHUB_REF -e GITHUB_SHA -e GITHUB_REPOSITORY \
-          -e GITHUB_REPOSITORY_OWNER -e GITHUB_RUN_ID -e GITHUB_RUN_NUMBER -e GITHUB_ACTOR \
-          -e GITHUB_WORKFLOW -e GITHUB_HEAD_REF -e GITHUB_BASE_REF -e GITHUB_EVENT_NAME \
-          -e GITHUB_SERVER_URL -e GITHUB_API_URL -e GITHUB_GRAPHQL_URL -e GITHUB_WORKSPACE \
-          -e GITHUB_ACTION -e GITHUB_EVENT_PATH -e RUNNER_OS -e RUNNER_TOOL_CACHE -e RUNNER_TEMP \
-          -e RUNNER_WORKSPACE -e ACTIONS_RUNTIME_URL -e ACTIONS_RUNTIME_TOKEN -e ACTIONS_CACHE_URL \
-          -e GITHUB_ACTIONS=true -e CI=true -v "/var/run/docker.sock":"/var/run/docker.sock" \
-          -v "/home/runner/work/_temp/_github_home":"/github/home" \
-          -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" \
-          -v "/home/runner/work/packer-qemu-templates/packer-qemu-templates":"/github/workspace" \
-          --rm -i enros/packer-build-qemu:latest packer build ubuntu-focal.json
-        env:
-          VAGRANT_CLOUD_TOKEN: ${{ secrets.VAGRANT_CLOUD_TOKEN }}
-          PACKER_LOG: 1
+
