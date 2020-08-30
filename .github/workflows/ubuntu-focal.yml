@@ -37,3 +37,4 @@ jobs:
           --rm -i enros/packer-build-qemu:latest packer build ubuntu-focal.json
         env:
           VAGRANT_CLOUD_TOKEN: ${{ secrets.VAGRANT_CLOUD_TOKEN }}
+          PACKER_LOG: 1
