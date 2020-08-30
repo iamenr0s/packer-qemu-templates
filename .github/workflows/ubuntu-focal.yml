@@ -13,7 +13,7 @@ jobs:
       - 
         run: sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y install qemu qemu-kvm libvirt-daemon bridge-utils virt-manager virtinst cpu-checker kmod
       - 
-        run: sudo kvm-ok
+        run: sudo modprobe kvm && sudo kvm-ok
       - 
         uses: actions/checkout@v1
       - 
