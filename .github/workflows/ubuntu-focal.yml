@@ -23,7 +23,7 @@ jobs:
         name: Packer build ubuntu-focal
         run: |
           /usr/bin/docker run --privileged \
-          --workdir /github/workspace -e VAGRANT_CLOUD_TOKEN -e INPUT_TEMPLATEFILE \
+          --workdir /github/workspace -e VAGRANT_CLOUD_TOKEN -e PACKER_LOG -e INPUT_TEMPLATEFILE \
           -e INPUT_WORKINGDIR -e HOME -e GITHUB_JOB -e GITHUB_REF -e GITHUB_SHA -e GITHUB_REPOSITORY \
           -e GITHUB_REPOSITORY_OWNER -e GITHUB_RUN_ID -e GITHUB_RUN_NUMBER -e GITHUB_ACTOR \
           -e GITHUB_WORKFLOW -e GITHUB_HEAD_REF -e GITHUB_BASE_REF -e GITHUB_EVENT_NAME \
@@ -37,3 +37,4 @@ jobs:
           --rm -i enros/packer-build-qemu:latest PACKER_LOG=1 packer build ubuntu-focal.json
         env:
           VAGRANT_CLOUD_TOKEN: ${{ secrets.VAGRANT_CLOUD_TOKEN }}
+          PACKER_LOG: 1
