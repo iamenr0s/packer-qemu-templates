@@ -22,9 +22,7 @@ jobs:
       - 
         name: Packer build ubuntu-focal
         run: |
-          /usr/bin/docker run \
-          --cap-add SYS_ADMIN --cap-add NET_ADMIN --device /dev/kvm \
-          --security-opt apparmor:unconfined --security-opt seccomp=unconfined \
+          /usr/bin/docker run --privileged \
           --workdir /github/workspace -e VAGRANT_CLOUD_TOKEN -e INPUT_TEMPLATEFILE \
           -e INPUT_WORKINGDIR -e HOME -e GITHUB_JOB -e GITHUB_REF -e GITHUB_SHA -e GITHUB_REPOSITORY \
           -e GITHUB_REPOSITORY_OWNER -e GITHUB_RUN_ID -e GITHUB_RUN_NUMBER -e GITHUB_ACTOR \
