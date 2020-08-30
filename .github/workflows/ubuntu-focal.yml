@@ -11,7 +11,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - 
-        run: sudo apt-get update && apt-get install openssl qemu-system-x86 qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virtinst virt-manager
+        run: sudo apt-get update && sudo apt-get install openssl qemu-system-x86 qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virtinst virt-manager
       - 
         uses: actions/checkout@v1
       - 
