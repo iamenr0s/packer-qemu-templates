@@ -1,14 +1,10 @@
 dist: bionic
-language: python
-python:
-  - 3.6
 env:
   global:
     PACKER_VERSION: 1.6.2
 
   matrix:
     PACKER_BUILD_TEMPLATE: ubuntu-bionic.json
-    PACKER_BUILD_TEMPLATE: ubuntu-focal.json
 
 addons:
   apt:
@@ -24,6 +20,9 @@ addons:
 install:
  - sudo kvm-ok
  - sudo modprobe kvm
+
+script:
+ - docker --version
 
 notifications:
   slack:
