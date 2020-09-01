@@ -1,0 +1,31 @@
+dist: bionic
+language: python
+python:
+  - 3.6
+env:
+  global:
+    PACKER_VERSION: 1.6.2
+
+  matrix:
+    PACKER_BUILD_TEMPLATE: ubuntu-bionic.json
+    PACKER_BUILD_TEMPLATE: ubuntu-focal.json
+
+addons:
+  apt:
+    update: true
+    packages:
+      - qemu
+      - qemu-kvm
+      - libvirt-bin
+      - bridge-utils
+      - virt-manager
+      - cpu-checker
+
+install:
+ - sudo kvm-ok
+ - sudo modprobe kvm
+
+notifications:
+  slack:
+    rooms:
+      secure: grGSUjLWVKL1jR8dswOPHt72DbpmxvuQIQT5TR359yK5aRDja+8Zh5lUD7stCAwiiC7zTrWyklDRzXBo2sT7L2Hcz1ErW0awpQajm6NO9rNqzbP/yFZJndCG+2xaqksnVlRscEvhyIaq5Pdceau1ZY8CrtBHWSAP3xUWIqwbtmgquQnTZ0IQ48V4qh+s/mMGRQ/SZnx54lom9nVHoXCvDGr4JR72A4v/wzQMlZKMshW71XALQNGxyQpH0ayQxEaS233sdsjzjz9CA/NIEQuqUDd/inllKdpgyBCvVoSwwDB/9X8V1lHzMSlxdMMbX41RwVdXGA9LLqBHqcp625xRZfO3YCCusGG9yOiJ/s9z1ypNtClTvBsIlXc5Z4aTHIsc4a9Au80kUTg3DY1kNhs87IzgsAZxg2LYBedCuGz0p7xMoKB9Ug5GRJUCaDEt3dupz/EXmgcZYLfSoGyOwT//In9f1SmYROrK4/IUXnnSl9iX/tpUG7IsK16PYKbPgNTBNahy+o4DeMHcOI61NXyVEa03qA3MniYKBEzmc7sZx8aoPvbmCTFRW7n3UTquS1cYnNZ8lKZzYB5sUOly4WuI5h2j/WebZOdxztaymjp7i3PD+zMTTQC3iH0blrAn0RaZiAmqQaJ5HEwyeVo891VWxhOLz6heMeHj1IWNPdU9ewk=
