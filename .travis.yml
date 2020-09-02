@@ -1,29 +1,28 @@
 dist: bionic
 env:
   global:
-    PACKER_VERSION: 1.6.2
-
+  - PACKER_VERSION: 1.6.2
+  - DOCKER_IMAGE: enros/packer-build-qemu:latest
+  - secure: h13V9JQ8L6xKHreIlJxko3WqBSVN9wvKyQ9a3KhxArTNzRnvADoF4JeHPN/q7tNvXRfVruhaELvPu282BSHKD84+HouyfqieCJ7TPPpRkbt9fNvnVdegFW3Gn93XIf2mj1thtOPVAKoKTTKRfnNtOr23ggX0aM68pFkGR49gsOExoDt+t97mB/YlJnthk0Pr1A2hoAWRZNaai6i5vJjRaHimDz4xqtDeRKo9EsCvSsZruSXrbMdfoqDSNXuTEi/wypVrqlDt4OkGohJM8njx/UvnI1/Z0Aft/rV5c80MXLTW9fFMaeAFtgSLkWyzbTiAlcQpScYLNvOBbZlZZRfQR3ZMpGwCusF+juOMVcR2HS6KldP4I9/85wIHRgAsTHEX+Q8iKDSx77bZRpYpm1W9p2AzrciOqzlRjjXn7tLfPN4+6E0N3eUvRr5JPS+0PSVXwTu2i567fKAYGAN1g4MsGQ3421D0YO9Hnl20m40HGrPVgck6LKzhpjvqJGNn0Ia3SxXQEDbWhSGPUOTjwP9cRTVP4V83mV1z/kYWzinfM9XbvGKYCOlTRTWSXcbF+da/iIwRe/qSuixBLIiiWQnbt8Jy05TqwAtmaJmpxa5nFuf6X2RqwtwDO6X9vxZAkpIASpc36IhMsTaeQlSh2hx3wGymYaxfrHig3/8HAPfKrt0=
   matrix:
-    PACKER_BUILD_TEMPLATE: ubuntu-bionic.json
-
+    PACKER_BUILD_TEMPLATE: 
+      - ubuntu-bionic.json
+      - ubuntu-focal.json
 addons:
   apt:
     update: true
     packages:
-      - qemu
-      - qemu-kvm
-      - libvirt-bin
-      - bridge-utils
-      - virt-manager
-      - cpu-checker
-
+    - qemu
+    - qemu-kvm
+    - libvirt-bin
+    - bridge-utils
+    - virt-manager
+    - cpu-checker
 install:
- - sudo kvm-ok
- - sudo modprobe kvm
-
+- sudo kvm-ok
+- sudo modprobe kvm
 script:
- - docker --version
-
+  - docker run --rm --privileged -e VAGRANT_CLOUD_TOKEN -v $PWD:/github/project -w /github/project $DOCKER_IMAGE packer build $PACKER_BUILD_TEMPLATE
 notifications:
   slack:
     rooms:
