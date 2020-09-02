@@ -1,8 +1,9 @@
 dist: bionic
 
 env:
-  - PACKER_BUILD_TEMPLATE: ubuntu-bionic.json
-  - PACKER_BUILD_TEMPLATE: ubuntu-focal.json
+  jobs:
+    - PACKER_BUILD_TEMPLATE: ubuntu-bionic.json
+    - PACKER_BUILD_TEMPLATE: ubuntu-focal.json
   global:
     - PACKER_VERSION: 1.6.2
     - DOCKER_IMAGE: enros/packer-build-qemu:latest
